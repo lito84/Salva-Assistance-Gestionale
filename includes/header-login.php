@@ -1,0 +1,1 @@
+<h1><a href="<?php echo $p_sito;?>"><img class="logo" src="<?php echo $p_logo;?>" title="<?php echo $p_ragione_sociale;?>"/></a></h1>
