@@ -1,5 +1,6 @@
 <?php include("../includes/mysql.inc.php");
 	require("../includes/parameters.php");
+	require("../includes/functions.php");
 require("../PHPMailer/class.phpmailer.php"); // Gestione email 
 require("../PHPMailer/class.smtp.php"); // Gestione email 
 
@@ -31,12 +32,14 @@ if($_POST["action"]=="percentuale_provvigione"){
 	$stampa_prodotto=0;
 	$id_convenzione=addslashes($_POST["id_convenzione"]);
 	$aliquota=$_POST["aliquota"];
+	$data_nascita=convertiDatUS_IT($_POST["data_nascita"]);
 	if($_POST["vendita"]=="Y") $vendita=1;
 	if($_POST["stampa_prodotto"]=="Y") $stampa_prodotto=1;
 
+
 if($_POST["action"]=="inserisci"){
 	
-	$sql="INSERT INTO utenti (nome,login, password, email, telefono, ragionesociale, indirizzo, citta, partitaiva, cf, id_ruolo, vendita, agente_superiore, percentuale, stampa_prodotto, aliquota, id_convenzione) VALUES ('$nome','$login','$password','$email','$telefono','$ragionesociale','$indirizzo','$citta','$partitaiva','$cf','$ruolo','$vendita','$agente_superiore','$percentuale','$stampa_prodotto','$aliquota','$id_convenzione')";
+	$sql="INSERT INTO utenti (nome,login, password, email, telefono, ragionesociale, indirizzo, citta, partitaiva, cf, id_ruolo, vendita, agente_superiore, percentuale, stampa_prodotto, aliquota, id_convenzione, data_nascita) VALUES ('$nome','$login','$password','$email','$telefono','$ragionesociale','$indirizzo','$citta','$partitaiva','$cf','$ruolo','$vendita','$agente_superiore','$percentuale','$stampa_prodotto','$aliquota','$id_convenzione','$data_nascita')";
 	$res=mysql_query($sql);
 
 
@@ -54,7 +57,7 @@ if($_POST["action"]=="inserisci"){
 		$valori=array($nome, $link, $login, $password);
 				
 		$messaggio=str_replace($campi,$valori,$messaggio);
-	$mail=new PHPMailer();
+		$mail=new PHPMailer();
 		$mail->IsSMTP();
 		$mail->SMTPAuth = true; // turn on SMTP authentication
 		$mail->Username = $p_smtp_user; // SMTP username
@@ -135,7 +138,7 @@ if($_POST["action"]=="modifica"){
 	
 	$id_utente=$_POST["id_utente"];
 	
-	$sql="UPDATE utenti  SET nome='$nome', login='$login', password='$password', email='$email', telefono='$telefono', ragionesociale='$ragionesociale', indirizzo='$indirizzo', citta='$citta', partitaiva='$partitaiva', cf='$cf', id_ruolo='$ruolo', agente_superiore='$agente_superiore', vendita='$vendita',percentuale='$percentuale', stampa_prodotto='$stampa_prodotto', aliquota='$aliquota', id_convenzione='$id_convenzione' WHERE id_utente='$id_utente'";
+	$sql="UPDATE utenti  SET nome='$nome', login='$login', password='$password', email='$email', telefono='$telefono', ragionesociale='$ragionesociale', indirizzo='$indirizzo', citta='$citta', partitaiva='$partitaiva', cf='$cf', id_ruolo='$ruolo', agente_superiore='$agente_superiore', vendita='$vendita',percentuale='$percentuale', stampa_prodotto='$stampa_prodotto', aliquota='$aliquota', id_convenzione='$id_convenzione', data_nascita='$data_nascita' WHERE id_utente='$id_utente'";
 	$res=mysql_query($sql);
 	exit;
 

@@ -179,6 +179,7 @@ $('.table-striped').on( 'draw.dt', function () {
         <th class="agente">Agente</th>
      <?php endif;?>
      <th class="agente">Prodotto</th>
+     <th class="data">Importo</th>
      <th class="data">Inserimento</th>
      <th class="actions">&nbsp;</th>
     </tr> 
@@ -191,6 +192,7 @@ $('.table-striped').on( 'draw.dt', function () {
      <?php endif;?>
         <th><input type="text" id="3" class="pratiche-input form-control" ></th>
         <th><input type="text" id="4" class="pratiche-input form-control data" ></th>
+        <th><input type="text" id="5" class="pratiche-input form-control data" ></th>
         <th></th>
     </tr>
   </thead>  

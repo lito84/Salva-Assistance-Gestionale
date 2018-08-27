@@ -1,4 +1,5 @@
 <?php include("../../includes/mysql.inc.php");
+include("../../includes/functions.php");
 $sql="SELECT * FROM utenti WHERE id_utente='$_GET[id_utente]'";
 $res=mysql_query($sql);
 $rows=mysql_fetch_array($res, MYSQL_ASSOC);
@@ -12,6 +13,7 @@ $partitaiva=utf8_encode($rows["partitaiva"]);
 $cf=utf8_encode($rows["cf"]);
 $ragionesociale=utf8_encode($rows["ragionesociale"]);
 $indirizzo=utf8_encode($rows["indirizzo"]);
+$citta=utf8_encode($rows["citta"]);
 $telefono=utf8_encode($rows["telefono"]);
 $id_utente=$rows["id_utente"];
 $id_ruolo=$rows["id_ruolo"];
@@ -21,6 +23,8 @@ $vendita=$rows["vendita"];
 $percentuale=utf8_encode($rows["percentuale"]);
 $stampa_prodotto=utf8_encode($rows["stampa_prodotto"]);
 $aliquota=utf8_encode($rows["aliquota"]);
+
+$data_nascita=convertiDataIT_US($rows["data_nascita"]);
 ?>
 <script>
 	$(document).ready(function(){
@@ -79,7 +83,10 @@ $aliquota=utf8_encode($rows["aliquota"]);
     <label for="nome">Login</label>
     <input type="text" class="form-control" id="login" name="login" placeholder="login" required value="<?php echo $login;?>">
     <label for="password">Password</label>
-    <input type="password" class="form-control" id="password" name="password" placeholder="password" data-toggle='password' required value="<?php echo $password;?>">     
+    <input type="password" class="form-control" id="password" name="password" placeholder="password" data-toggle='password' required value="<?php echo $password;?>"> 
+
+    <label for="data_nascita">Data nascita</label>
+    <input type="text" class="form-control" id="data_nascita" name="data_nascita" placeholder="gg/mm/aaaa" value="<?=$data_nascita;?>" />     
   </fieldset>
 
   <fieldset class="form-group">
@@ -101,7 +108,7 @@ $aliquota=utf8_encode($rows["aliquota"]);
       <?php $sql1="SELECT * FROM istat_comuni WHERE cessato='N' ORDER BY comune";
             $res1=mysql_query($sql1);
             while($rows1=mysql_fetch_array($res1, MYSQL_ASSOC)){?>
-              <option value='<?php echo $rows1["cod_catastale"];?>'><?php echo utf8_encode($rows1["comune"]." (".$rows1["provincia"].")");?></option>
+              <option value='<?php echo $rows1["cod_catastale"];?>' <?php if($citta==$rows1["cod_catastale"]) echo "selected";?>><?php echo utf8_encode($rows1["comune"]." (".$rows1["provincia"].")");?></option>
       <?php } ?>
     </select>
     <label for="partitaiva">Partita IVA</label>

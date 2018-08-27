@@ -16,6 +16,9 @@ function generateRandomString($length = 8) {
 			$("#contenitore").empty().load("form/utenti/utenti.php");	
 		});
 
+
+   $("#data_nascita").mask("99/99/9999");
+
    $("#citta").select2({
       placeholder: "Seleziona un comune"
    });
@@ -59,7 +62,10 @@ function generateRandomString($length = 8) {
     <label for="nome">Login</label>
     <input type="text" class="form-control" id="login" name="login" placeholder="Login" required>
     <label for="password">Password</label>
-    <input type="text" class="form-control" id="password" name="password" placeholder="Password" required value="<?php echo generateRandomString();?>">    
+    <input type="text" class="form-control" id="password" name="password" placeholder="Password" required value="<?php echo generateRandomString();?>">
+
+    <label for="data_nascita">Data nascita</label>
+    <input type="text" class="form-control" id="data_nascita" name="data_nascita" placeholder="gg/mm/aaaa" />    
   </fieldset>
 
   <fieldset class="form-group">

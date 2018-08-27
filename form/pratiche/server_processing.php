@@ -9,15 +9,15 @@ $requestData= $_REQUEST;
 
 
 if($_SESSION["livello"]=="10"):
-	$aColumns=array('codice_attivazione','invitato','invitante', 'agente','prodotto','data_inserimento','actions'); 
+	$aColumns=array('codice_attivazione','invitato','invitante', 'agente','prodotto','importo','data_inserimento','actions'); 
 else:
-	$aColumns=array('codice_attivazione','invitato', 'invitante','prodotto','data_inserimento','actions'); 
+	$aColumns=array('codice_attivazione','invitato', 'invitante','prodotto','importo','data_inserimento','actions'); 
 endif;
 
 $output = array(
 		"aaData" => array()
 	);
-$sql="SELECT id_invitante, codice_attivazione, clienti.cognome AS cognome, clienti.nome AS nome, pratiche.id_cliente AS id_cliente, data_inserimento, data_pagamento, data_attivazione AS dataAttivazione, data_stampa, pagato, pratiche.attivo, fatturato, fattura, pratiche.id_pratica, prezzo_cliente, pratiche.esportazione_pagamento, prodotti.id_prodotto AS id_prodotto, pratiche.id_agente AS id_agente, contratto  FROM pratiche LEFT JOIN clienti ON pratiche.id_cliente = clienti.id_cliente LEFT JOIN convenzioni_prodotti ON pratiche.id_prodotto_convenzione = convenzioni_prodotti.id_convenzione_prodotto LEFT JOIN convenzioni ON convenzioni.id_convenzione = convenzioni_prodotti.id_convenzione LEFT JOIN prodotti ON prodotti.id_prodotto = convenzioni_prodotti.id_prodotto WHERE data_richiesta_attivazione = '' AND data_attivazione <> '' AND pratiche.id_cliente <> '0' ";
+$sql="SELECT id_invitante, codice_attivazione, clienti.cognome AS cognome, clienti.nome AS nome, pratiche.id_cliente AS id_cliente, data_inserimento, data_pagamento, data_attivazione AS dataAttivazione, data_stampa, pagato, pratiche.attivo, fatturato, fattura, pratiche.id_pratica, prezzo_cliente, pratiche.esportazione_pagamento, prodotti.id_prodotto AS id_prodotto, pratiche.id_agente AS id_agente, contratto, pratiche.importo  FROM pratiche LEFT JOIN clienti ON pratiche.id_cliente = clienti.id_cliente LEFT JOIN convenzioni_prodotti ON pratiche.id_prodotto_convenzione = convenzioni_prodotti.id_convenzione_prodotto LEFT JOIN convenzioni ON convenzioni.id_convenzione = convenzioni_prodotti.id_convenzione LEFT JOIN prodotti ON prodotti.id_prodotto = convenzioni_prodotti.id_prodotto WHERE data_richiesta_attivazione = '' AND data_attivazione <> '' AND pratiche.id_cliente <> '0' ";
 
         if($_SESSION["id_ruolo"]!="01"){
             $sql.="AND pratiche.id_agente='$_SESSION[id_utente]' ";
