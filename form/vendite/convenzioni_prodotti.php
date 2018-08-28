@@ -4,11 +4,8 @@
 <script>
 $(document).ready(function(){
 
-
-
-
 $(".btn-vendita").bind("click", function(){
-  $(".prodotti_convenzione_dettaglio").empty().load("form/vendite/form_vendita.php?id_prodotto_convenzione="+$(this).attr('data-id'));
+  $(".prodotti_convenzione_dettaglio").empty().load("form/vendite/form_vendita.php?id_prodotto_convenzione="+$(this).attr('data-id')+"&utente_selezionato=<?php echo $_GET["utente_selezionato"];?>");
 });
 
 

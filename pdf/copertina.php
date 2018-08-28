@@ -26,7 +26,7 @@ session_start();
 
 
 
-$sql="SELECT *, clienti.cognome AS cognome, clienti.nome AS nome, utenti.nome AS agente, invitanti.cognome AS invitante_cognome, invitanti.nome AS invitante_nome FROM pratiche LEFT JOIN clienti ON pratiche.id_cliente = clienti.id_cliente LEFT JOIN convenzioni_prodotti ON pratiche.id_prodotto_convenzione = convenzioni_prodotti.id_convenzione_prodotto LEFT JOIN convenzioni ON convenzioni.id_convenzione = convenzioni_prodotti.id_convenzione LEFT JOIN utenti ON convenzioni.id_utente = utenti.id_utente LEFT JOIN invitanti ON invitanti.id_invitante = pratiche.id_invitante WHERE pratiche.codice_attivazione='$_GET[codice_attivazione]'";
+$sql="SELECT *, clienti.cognome AS cognome, clienti.nome AS nome, utenti.nome AS agente, invitanti.cognome AS invitante_cognome, invitanti.nome AS invitante_nome, pratiche.id_agente FROM pratiche LEFT JOIN clienti ON pratiche.id_cliente = clienti.id_cliente LEFT JOIN convenzioni_prodotti ON pratiche.id_prodotto_convenzione = convenzioni_prodotti.id_convenzione_prodotto LEFT JOIN convenzioni ON convenzioni.id_convenzione = convenzioni_prodotti.id_convenzione LEFT JOIN utenti ON pratiche.id_agente = utenti.id_utente LEFT JOIN invitanti ON invitanti.id_invitante = pratiche.id_invitante WHERE pratiche.codice_attivazione='$_GET[codice_attivazione]'";
 $res=mysql_query($sql);
 $rows=mysql_fetch_array($res, MYSQL_ASSOC);
 $id_prodotto_convenzione=$rows["id_prodotto_convenzione"];

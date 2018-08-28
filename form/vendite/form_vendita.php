@@ -19,6 +19,13 @@ include("../../includes/auth.inc.php");
     if($rows["id_prodotto"]=='002') $prodotto="Spese sanitarie";
     if($rows["id_prodotto"]=='003') $prodotto="Mezzi Sussistenza + Spese sanitarie";
 
+
+    if($_GET["utente_selezionato"]!=""):
+    	$id_utente=$_GET["utente_selezionato"];
+    else:
+    	$id_utente=$_SESSION["id_utente"];
+    endif;
+
     // $prodotto = utf8_decode($rows["prodotto"]);
 ?>
 
@@ -258,14 +265,16 @@ jQuery(document).ready(function(){
 <div class="form-group">
 	<div class="row">
 		<div class="col-xs-12 col-sm-6">
-			<label for="nome">Nome</label>
-			<input id="nome" name="nome" value="" required class="required form-control">
-		</div>
-		<div class="col-xs-12 col-sm-6">
 			<label for="cognome">Cognome</label>
 			<input id="cognome" name="cognome" value="" required class="required form-control">
 			
 		</div>
+
+		<div class="col-xs-12 col-sm-6">
+			<label for="nome">Nome</label>
+			<input id="nome" name="nome" value="" required class="required form-control">
+		</div>
+		
 	</div>
 </div>
 <div class="form-group">	
@@ -363,14 +372,16 @@ jQuery(document).ready(function(){
 <h3 class="modulo_attivazione">Dati invitante</h3>
 <div class="form-group">
 <div class="row">
+	
 	<div class="col-xs-12 col-sm-6">
-	<label for="nome_invitante">Nome</label>
-					<input id="nome_invitante" name="nome_invitante" value="" required class="required form-control">
+			<label for="cognome_invitante">Cognome</label>
+			<input id="cognome_invitante" name="cognome_invitante" value="" required class="required form-control">
 	</div>
 	<div class="col-xs-12 col-sm-6">
-				<label for="cognome_invitante">Cognome</label>
-					<input id="cognome_invitante" name="cognome_invitante" value="" required class="required form-control">
+		<label for="nome_invitante">Nome</label>
+		<input id="nome_invitante" name="nome_invitante" value="" required class="required form-control">
 	</div>
+	
 </div>
 <input type="hidden" id="datanascita_invitante" name="datanascita_invitante" value="" type="text">
 <input type="hidden" id="nascita_invitante" name="nascita_invitante" value="" type="text">	
@@ -436,7 +447,7 @@ jQuery(document).ready(function(){
 
 
 <input type="hidden" name="id_convenzione_prodotto" id="id_convenzione_prodotto" value="<?php echo $_GET["id_prodotto_convenzione"];?>" />
-<input type="hidden" name="id_utente" id="id_utente" value="<?php echo $_SESSION["id_utente"];?>" />
+<input type="hidden" name="id_utente" id="id_utente" value="<?php echo $id_utente;?>" />
 <input type="hidden" name="prezzo" id="prezzo" value="" />
 
 <input type="hidden" name="action" id="action" value="crea_pratica">

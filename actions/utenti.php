@@ -32,7 +32,7 @@ if($_POST["action"]=="percentuale_provvigione"){
 	$stampa_prodotto=0;
 	$id_convenzione=addslashes($_POST["id_convenzione"]);
 	$aliquota=$_POST["aliquota"];
-	$data_nascita=convertiDatUS_IT($_POST["data_nascita"]);
+	$data_nascita=convertiDataUS_IT($_POST["data_nascita"]);
 	if($_POST["vendita"]=="Y") $vendita=1;
 	if($_POST["stampa_prodotto"]=="Y") $stampa_prodotto=1;
 
@@ -139,6 +139,9 @@ if($_POST["action"]=="modifica"){
 	$id_utente=$_POST["id_utente"];
 	
 	$sql="UPDATE utenti  SET nome='$nome', login='$login', password='$password', email='$email', telefono='$telefono', ragionesociale='$ragionesociale', indirizzo='$indirizzo', citta='$citta', partitaiva='$partitaiva', cf='$cf', id_ruolo='$ruolo', agente_superiore='$agente_superiore', vendita='$vendita',percentuale='$percentuale', stampa_prodotto='$stampa_prodotto', aliquota='$aliquota', id_convenzione='$id_convenzione', data_nascita='$data_nascita' WHERE id_utente='$id_utente'";
+
+
+	echo $sql;
 	$res=mysql_query($sql);
 	exit;
 

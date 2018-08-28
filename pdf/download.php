@@ -84,6 +84,10 @@ $url_loghi="uploads/immagini/files/";
 $sql="SELECT *, clienti.cognome AS cognome, clienti.nome AS nome, utenti.nome AS agente FROM pratiche LEFT JOIN clienti ON pratiche.id_cliente = clienti.id_cliente LEFT JOIN convenzioni_prodotti ON pratiche.id_prodotto_convenzione = convenzioni_prodotti.id_convenzione_prodotto LEFT JOIN convenzioni ON convenzioni.id_convenzione = convenzioni_prodotti.id_convenzione LEFT JOIN utenti ON convenzioni.id_utente = utenti.id_utente WHERE pratiche.codice_attivazione='$_GET[codice_attivazione]'";
 $res=mysql_query($sql);
 $rows=mysql_fetch_array($res, MYSQL_ASSOC);
+
+$passaporto=$rows["passaporto"];
+$visto=$rows["visto"];
+
 $id_prodotto_convenzione=$rows["id_prodotto_convenzione"];
 $id_prodotto=$rows["id_prodotto"];
 
@@ -1708,12 +1712,38 @@ $pdf->Output("tmp/".$filenameinit.".pdf","F");
 
 endif; //Fine Integration Mezzi di Sussistenza
 
+
+
+if($_SESSION["livello"]=="10"): // Accodo i documenti uploadati
+  $documenti=array();
+  if($passaporto!=""):
+      $url_passaporto=$p_sito."uploads/documenti/files/".$passaporto;
+      array_push($documenti,$url_passaporto);
+  endif;
+
+  if($visto!=""):
+      $url_visto=$p_sito."uploads/documenti/files/".$visto;
+      array_push($documenti,$url_visto);
+  endif;
+endif;
+
+
 require('PDFMerger.php');
-
-
 $pdff = new PDFMerger;
 
 $pdff->addPDF('tmp/'.$filenameinit.".pdf", 'all');
+
+if($_SESSION["livello"]=="10"): // Accodo i documenti uploadati
+  
+  if($passaporto!=""):
+      $pdff->addPDF('../uploads/documenti/files/'.$passaporto,'all');
+  endif;
+
+  if($visto!=""):
+      $pdff->addPDF('../uploads/documenti/files/'.$visto,'all');
+  endif;
+endif;
+
 
 //$pdff->addPDF('tmp/Bugiardino.pdf', 'all');
 $pdff->merge('browser', $_GET["codice_attivazione"].'.pdf');

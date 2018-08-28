@@ -39,9 +39,15 @@
 						<?php endif;?>
 
 						<div class="col-xs-12">
+							<div class="pratiche_da_eliminare"></div>
+						</div>
 
+						<div class="col-xs-12">
+							<div class="pratiche_da_stampare"></div>
+						</div>
+
+						<div class="col-xs-12">
 							<div class="ultime_pratiche"></div>
-						
 						</div>
 						</div>	
 					
@@ -53,5 +59,7 @@
 <?php include("includes/footer.php");?>
 
 <script type="text/javascript">
+	$(".pratiche_da_eliminare").load("form/pratiche/pratiche_da_eliminare.php");
+	$(".pratiche_da_stampare").load("form/pratiche/pratiche_da_stampare.php");
 	$(".ultime_pratiche").load("form/pratiche/ultime_pratiche.php");
 </script>

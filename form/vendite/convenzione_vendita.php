@@ -8,7 +8,7 @@
 
 	$(document).ready(function(){
 
-     $(".tabella_prodotti_container").load("form/vendite/convenzioni_prodotti.php?id_convenzione=<?php echo $_GET["id_convenzione"];?>");
+     $(".tabella_prodotti_container").load("form/vendite/convenzioni_prodotti.php?id_convenzione=<?php echo $_GET["id_convenzione"];?>&utente_selezionato=<?php echo $_GET["utente_selezionato"];?>");
   
 
    $('form.prodotto').submit(function(e) {

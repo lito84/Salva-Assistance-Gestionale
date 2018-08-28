@@ -53,6 +53,7 @@ $(document).ready(function(){
 
             "lengthMenu": [[25, 50, 100, -1], [25, 50, 100,"Tutte"]],
              "bSort": true,
+             
             "language": 
           {
     "sEmptyTable":     "Nessun dato presente nella tabella",
@@ -82,6 +83,14 @@ $(document).ready(function(){
 
 $('.table-striped').on( 'draw.dt', function () {
 
+
+
+      $('.elimina_pratica').on('click', function () {
+       $.post("actions/vendite.php",{codice_attivazione:$("#elimina-pratica").val(), action:"richiesta_eliminazione"}, function(data){
+           $("#contenitore").empty().load("form/pratiche/pratiche.php");
+        });
+      });
+
      $(".upload").bind("click", function(){
       $("#codice_pratica").val($(this).attr("data-codice"));
     });
@@ -103,6 +112,12 @@ $('.table-striped').on( 'draw.dt', function () {
         $(".copertina").bind("click", function(){
            window.open("pdf/copertina.php?codice_attivazione="+$(this).attr("data-codice"),"_blank");
         });
+
+
+          $(".eliminazione").bind("click", function(){
+            $("#rif_pratica").append($(this).attr("data-codice"));
+            $("#elimina-pratica").val($(this).attr("data-codice"));
+          });
 
      
         <?php if($_SESSION["livello"]=="10"):?>
@@ -143,6 +158,12 @@ $('.table-striped').on( 'draw.dt', function () {
 
   $(".upload").bind("click", function(){
     $("#codice_pratica").val($(this).attr("data-codice"));
+  });
+
+
+  $(".eliminazione").bind("click", function(){
+    $("#rif_pratica").append($(this).attr("data-codice"));
+    $("#elimina-pratica").val($(this).attr("data-codice"));
   });
 
 
@@ -231,7 +252,30 @@ $('.table-striped').on( 'draw.dt', function () {
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Conferma e chiudi</button>
+        <button type="button" class="btn btn-primary carica" data-dismiss="modal">Conferma e chiudi</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Chiudi</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="elimina_pratica" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Elimina pratica</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <label>Confermi richiesta eliminazione pratica <span id="rif_pratica"></span> ?</label> 
+        
+        <input type="hidden" id="elimina-pratica" value="elimina-pratica" value="" />
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary elimina_pratica" data-dismiss="modal">Conferma e chiudi</button>
         <button type="button" class="btn btn-danger" data-dismiss="modal">Chiudi</button>
       </div>
     </div>

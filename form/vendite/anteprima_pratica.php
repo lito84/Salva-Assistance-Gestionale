@@ -2,7 +2,8 @@
 include("../../includes/mysql.inc.php");
 include("../../includes/auth.inc.php");
      
-$sql="SELECT * FROM pratiche WHERE codice_attivazione='".substr($_GET["codice_attivazione"],0,15)."'";
+$sql="SELECT * FROM pratiche WHERE codice_attivazione='".substr($_GET["codice_attivazione"],0,16)."'";
+
 $res=mysql_query($sql);
 $rows=mysql_fetch_array($res, MYSQL_ASSOC);
 $codice_attivazione=$rows["codice_attivazione"];

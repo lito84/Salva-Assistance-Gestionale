@@ -17,7 +17,7 @@ endif;
 $output = array(
 		"aaData" => array()
 	);
-$sql="SELECT id_invitante, codice_attivazione, clienti.cognome AS cognome, clienti.nome AS nome, pratiche.id_cliente AS id_cliente, data_inserimento, data_pagamento, data_attivazione AS dataAttivazione, data_stampa, pagato, pratiche.attivo, fatturato, fattura, pratiche.id_pratica, prezzo_cliente, pratiche.esportazione_pagamento, prodotti.id_prodotto AS id_prodotto, pratiche.id_agente AS id_agente, contratto, pratiche.importo  FROM pratiche LEFT JOIN clienti ON pratiche.id_cliente = clienti.id_cliente LEFT JOIN convenzioni_prodotti ON pratiche.id_prodotto_convenzione = convenzioni_prodotti.id_convenzione_prodotto LEFT JOIN convenzioni ON convenzioni.id_convenzione = convenzioni_prodotti.id_convenzione LEFT JOIN prodotti ON prodotti.id_prodotto = convenzioni_prodotti.id_prodotto WHERE data_richiesta_attivazione = '' AND data_attivazione <> '' AND pratiche.id_cliente <> '0' ";
+$sql="SELECT id_invitante, codice_attivazione, clienti.cognome AS cognome, clienti.nome AS nome, pratiche.id_cliente AS id_cliente, data_inserimento, data_pagamento, data_attivazione AS dataAttivazione, data_stampa, pagato, pratiche.attivo, fatturato, fattura, pratiche.id_pratica, prezzo_cliente, pratiche.esportazione_pagamento, prodotti.id_prodotto AS id_prodotto, pratiche.id_agente AS id_agente, contratto, pratiche.importo, richiesta_eliminazione  FROM pratiche LEFT JOIN clienti ON pratiche.id_cliente = clienti.id_cliente LEFT JOIN convenzioni_prodotti ON pratiche.id_prodotto_convenzione = convenzioni_prodotti.id_convenzione_prodotto LEFT JOIN convenzioni ON convenzioni.id_convenzione = convenzioni_prodotti.id_convenzione LEFT JOIN prodotti ON prodotti.id_prodotto = convenzioni_prodotti.id_prodotto WHERE data_richiesta_attivazione = '' AND data_attivazione <> '' AND pratiche.id_cliente <> '0' ";
 
         if($_SESSION["id_ruolo"]!="01"){
             $sql.="AND pratiche.id_agente='$_SESSION[id_utente]' ";
@@ -112,6 +112,16 @@ $sql="SELECT id_invitante, codice_attivazione, clienti.cognome AS cognome, clien
 			{
 				$row[]=$rowsa["nome"];
 				//$row[] = $sql;
+			}elseif ( $aColumns[$i] == "codice_attivazione" )
+			{
+				
+				if($rows["richiesta_eliminazione"]==1){
+					$codice_attivazione="<span class='codice_elimina'>".$rows["codice_attivazione"]."</span>";
+				}else{
+					$codice_attivazione=$rows["codice_attivazione"];
+				}	
+				$row[]=$codice_attivazione;
+				
 			}elseif ( $aColumns[$i] == "data_inserimento" )
 			{
 				$row[]=$data_inserimento;
@@ -124,13 +134,6 @@ $sql="SELECT id_invitante, codice_attivazione, clienti.cognome AS cognome, clien
    				if($rows["id_prodotto"]=='002') $prodotto="Spese sanitarie";
     			if($rows["id_prodotto"]=='003') $prodotto="Mezzi Sussistenza + Spese sanitarie";
 				$row[]=$prodotto;
-				
-			}
-			elseif ( $aColumns[$i] == "codice_attivazione" )
-			{
-				$codice_attivazione=$rows["codice_attivazione"];
-				
-				$row[]=$codice_attivazione;
 				
 			}
 			
@@ -167,9 +170,13 @@ $sql="SELECT id_invitante, codice_attivazione, clienti.cognome AS cognome, clien
 				$stampa="";
 				$visualizza="";
 				$copertina="";
+				$eliminazione="";
 				
 				$attivazione="<button title='Stato attivazione' data-id='".$rows['id_pratica']."' data-codice='".$rows["codice_attivazione"]."' class='btn_grid ".$attivo_classe." attivo'><i class='fa fa-check' aria-hidden='true'></i></button>";    
-              
+              	if($rows["richiesta_eliminazione"]=="0"):
+	              	$eliminazione="<button title='Richiedi eliminazione'  data-toggle='modal' data-target='#elimina_pratica' data-id='".$rows['id_pratica']."' data-codice='".$rows["codice_attivazione"]."' class='btn_grid btn-danger eliminazione'><i class='fa fa-trash' aria-hidden='true'></i></button>";
+	            endif;
+	              	
 				if($data_stampa!=""):
 
 					$stampa="<button title='Genera stampa' data-id='".$rows['id_pratica']."' data-codice='".$rows["codice_attivazione"]."' class='btn_grid btn-info stampa'><i class='fa fa-print' aria-hidden='true'></i></button>";
@@ -193,7 +200,7 @@ $sql="SELECT id_invitante, codice_attivazione, clienti.cognome AS cognome, clien
 						$copertina="<button title='Copertina' data-id='".$rows['id_pratica']."' data-codice='".$rows["codice_attivazione"]."' class='btn_grid btn-info copertina'><i class='fa fa-folder' aria-hidden='true'></i></button>";
 					endif;
 
-				$row[]=$attivazione.$stampa.$upload.$copertina;
+				$row[]=$attivazione.$stampa.$upload.$copertina.$eliminazione;
 			}
 			
 

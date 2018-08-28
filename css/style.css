@@ -83,6 +83,11 @@ legend{
     position: relative;
     top: 120px;
 }
+
+span.codice_elimina{
+    background-color: #b92c28;
+    color: #FFF;
+}
 /* Toggle Styles */
 #wrapper {
     padding-left: 0;
@@ -149,6 +154,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f8f8f8', end
 	font-weight: 700;
     font-size: 26px;
 	margin: 0 0 15px;
+}
+
+h3.table_title_eliminare{
+     background-color: #F00;
 }
 li.logged{
 	line-height: 22px!important;
@@ -282,6 +291,7 @@ th.pratica, input.pratica{
 th.data, input.data{
     max-width:80px!important;
 }
+
 th.agente, input.agente{
     max-width:80px!important;
 }

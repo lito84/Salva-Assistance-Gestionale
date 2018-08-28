@@ -22,6 +22,24 @@ if($_POST["action"]=="attivazione_pratica"){
 	exit;
 }
 
+if($_POST["action"]=="richiesta_eliminazione"){
+	
+		$sql="UPDATE pratiche SET richiesta_eliminazione='1' WHERE codice_attivazione='$_POST[codice_attivazione]'";
+		$res=mysql_query($sql);
+	
+	exit;
+}
+
+
+if($_POST["action"]=="elimina_admin"){
+	
+	$sql="DELETE FROM pratiche WHERE codice_attivazione='$_POST[codice_attivazione]'";
+	$res=mysql_query($sql);
+	$sql1="DELETE FROM decadi_pratiche WHERE codice_pratica='$_POST[codice_attivazione]'";
+	$res1=mysql_query($sql1);
+	exit;
+}
+
 
 if($_POST["action"]=="attiva"){
 	if($_POST["stampa_prodotto"]):
@@ -261,7 +279,7 @@ if($_POST["action"]=="crea_pratica"){
 
 				$sigla=$rowss["valore"];
 
-				$codice_attivazione = "CSA".$sigla.$anno.generateRandomString(4).$id_pratica;
+				$codice_attivazione = "CSA".$sigla.$anno.generateRandomString(4).substr($id_pratica,0,3);
 				//Aggiorno la pratica inserendo il codice attivazione 
 				$sql3="UPDATE pratiche SET codice_attivazione = '$codice_attivazione' WHERE id_pratica = '$id_pratica'";
 				$res3=mysql_query($sql3);
@@ -305,7 +323,7 @@ if($_POST["action"]=="crea_pratica"){
 
 			$sigla=$rowss["valore"];
 
-			$codice_attivazione = "CSA".$sigla.$anno.generateRandomString(4).$id_pratica;
+			$codice_attivazione = "CSA".$sigla.$anno.generateRandomString(4).substr($id_pratica,0,3);
 			//Aggiorno la pratica inserendo il codice attivazione 
 			$sql3="UPDATE pratiche SET codice_attivazione = '$codice_attivazione' WHERE id_pratica = '$id_pratica'";
 			$res3=mysql_query($sql3);

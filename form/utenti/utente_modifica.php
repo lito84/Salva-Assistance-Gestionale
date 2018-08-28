@@ -50,6 +50,8 @@ $data_nascita=convertiDataIT_US($rows["data_nascita"]);
    $("#citta").select2({
       placeholder: "Seleziona un comune"
    });
+
+   $("#data_nascita").mask("99/99/9999");
    $('form.utente').submit(function(e) {
       event.preventDefault();
       //grab all form data  
@@ -86,7 +88,7 @@ $data_nascita=convertiDataIT_US($rows["data_nascita"]);
     <input type="password" class="form-control" id="password" name="password" placeholder="password" data-toggle='password' required value="<?php echo $password;?>"> 
 
     <label for="data_nascita">Data nascita</label>
-    <input type="text" class="form-control" id="data_nascita" name="data_nascita" placeholder="gg/mm/aaaa" value="<?=$data_nascita;?>" />     
+    <input type="text" class="form-control" id="data_nascita" name="data_nascita" placeholder="gg/mm/aaaa" value="<?php echo $data_nascita;?>" />     
   </fieldset>
 
   <fieldset class="form-group">
